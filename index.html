@@ -81,6 +81,13 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
                 <li><a href="#" class="t2013">2013年度气温走势</a></li>
                 <li><a href="#" class="t2014">2014年度气温走势</a></li>
                 <li><a href="#" class="t2015">2015年度气温走势</a></li>
+
+                <li><a href="#" class="f2010">2010年度风向统计</a></li>
+                <li><a href="#" class="f2011">2011年度风向统计</a></li>
+                <li><a href="#" class="f2012">2012年度风向统计</a></li>
+                <li><a href="#" class="f2013">2013年度风向统计</a></li>
+                <li><a href="#" class="f2014">2014年度风向统计</a></li>
+                <li><a href="#" class="f2015">2015年度风向统计</a></li>
             </ul>
 
         </div>
@@ -124,42 +131,45 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
 
     $('ul.nav-sidebar a').click(function () {
         if ($(this).is('[class^="t"]')) {
-
             var year = $(this).attr('class').replace('t','');
-
             var yearArray = $.grep(arr, function (item, index) {
                 return item[0].indexOf(year) > 0;
             });
-            /*d2010.sort(function (a, b) {
-                var arrA = a[0].split(/[. :]/g).map(function (val) {
-                    return val * 1
-                });
-                var arrB = b[0].split(/[. :]/g).map(function (val) {
-                    return val * 1
-                });
-                try{
-                    return new Date(arrA[2], arrA[1] -1, arrA[0]-1, arrA[3], arrA[4], 0) < new Date(arrB[2], arrB[1]-1, arrB[0]-1, arrB[3], arrB[4], 0);
-                }catch (e){
-                    debugger;
-                }
-
-            });*/
-            console.log(yearArray);
             var sets = yearArray.map(function (array) {
                 return '<set label="' + array[0] + '" value="' + array[1] + '"/>';
             });
-            var d2011 = [];
-            var d2012 = [];
-            var d2013 = [];
-            var d2014 = [];
-            var d2015 = [];
-
             var chartData = '<chart caption="气温变化曲线" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" 度" labelDisplay="ROTATE" numDivLines="5" slantLabels="1">';
             chartData += sets.join('');
             chartData += '</chart>';
-
-
             var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width() * 2, $(window).height() - 50, "0", "0");
+            chart.setXMLData(chartData);
+            chart.render("container");
+        }else if($(this).is('[class^="f"]')){
+            //<chart caption='Airline Delay Causes' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>
+            year = $(this).attr('class').replace('f','');
+            yearArray = $.grep(arr, function (item, index) {
+                return item[0].indexOf(year) > 0;
+            });
+
+            var type = {};
+            $.each(yearArray,function(index,array){
+                var f = $.trim(array[6]||'无记录风向');
+                if(!!type[f]){
+                    type[f] = type[f] + 1;
+                }else {
+                    type[f] = 1;
+                }
+            });
+
+            sets = [];
+            $.each(type,function(key,value){
+               sets.push("<set value='"+value+"' label='"+key+"'/>");
+            });
+
+            chartData = "<chart caption='风向统计' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>";
+            chartData += sets.join('');
+            chartData += '</chart>';
+            chart = new FusionCharts("FCF/Pie2D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
             chart.setXMLData(chartData);
             chart.render("container");
         }
