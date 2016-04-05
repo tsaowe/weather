@@ -1,7 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,220 +18,154 @@
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="js/html5shiv.min.js"></script>
-      <script src="js/respond.min.js"></script>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+
+
     <![endif]-->
-  </head>
 
-  <body>
+    <!--总体研究思路为：-->
+    <!--硬件端：将采集大量的气象数据，如气压、气温、温度、湿度、风力、风向、降雨量、降雪量、能见度、辐射、日照等因素的数据。（硬件数据采用数据模拟的方式实现）-->
+    <!--服务器端：将所有硬件端传来的数据进行整合、存储，然后分析，在网站上给出监控和预测的曲线图以及数据显示，并且将根据分析出来的数据将预测出的现象给出报警装置，提供实时报警。-->
+    <!--工作重点：难度主要是在于如何将所有接收的大量的数据进行分析，给出展示，并监控，给出完善的预测趋势等信息，提供准确的实时报警等功能。-->
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">成都市气数据</a>
-        </div>
-        <!--<div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
-        </div>-->
-      </div>
-    </nav>
-    <!--
-    当地时间
-    T（温度）
-    Po（气压）
-    P（海平面气压）
-    Pa
-    U（湿度）
-    DD（风向）
-    Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天空可见度)	RRR（降水量）	E-->
 
+    <!--最近几十年来，因全球气温变暖，导致气象灾害频发，而且愈发厉害。这些多为突发性、局地性的气象灾害呈现多发、频发、重发态势，发生的时间短、危害度大，如何对实时接收的气象信息进行快速分析及监测成为当务之急。-->
+    <!--到目前为止，全国各气象部门均对雷雨冰雹、大风暴雨、大雾沙尘暴、降雪、高温热浪等突发性灾害天气通过多种手段进行灾害性天气的分析与监测。但如今，如何建立完善的气象分析和气象监测系统仍然面临着严峻挑战。由于目前气象信息的收集、发布、接收还不够规范，同时没有一个完善而且快速的气象信息分析和监测系统，无法快速地在各网络进行监测预警。传统、单一、低效率的气象分析监测系统已经无法满足如今愈发疯狂的气象灾害的预测，如何构建智能、功能完善、有效的气象分析与监测系统，是预防气象灾害亟待解决的重点。-->
+    <!--本系统的设计实现可在对实时接收的气象信息的基础上，真正意义上实现集存储、分析、监控和预警为一体的智能气象系统展示与监控，将有效保证对所接收的气象信息分析和监测的针对性、时效性、准确性和智能性。-->
+
+
+    <!--1、2015年12月15日至2016年2月29日：指导教师指导学生对所选择的课题进行调研、资料的收集、向学生下达毕业论文(设计)任务书、并指导学生完成开题报告；-->
+    <!--2、2016年2月29日至2016年3月7日：查阅相关资料，编写系统的开发设计文档，对系统进行详细系统的功能定义并确定下一步开发；-->
+    <!--3、2016年3月7日至4月1日：系统功能的编码实现；准备中期检查。-->
+    <!--4、2016年4月1日至5月15日：系统全面测试，归并相关系统开发文档，完成毕业论文的撰写及定稿；-->
+    <!--5、2016年5月16至6月5日：系统演示检查、答辩资格审查；-->
+    <!--6、2016年6月6日至6月20日：论文上传、答辩等。-->
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">系统概况</a></li>
-            <li><a href="#">年度气温走势</a></li>
-            <li><a href="#">当日气温走势</a></li>
-            <li><a href="#">Export</a></li>
-          </ul>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">成都市气数据</a>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
-
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-          </div>
-
-          <h2 class="sub-header">Section title</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>nisi</td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>at</td>
-                </tr>
-                <tr>
-                  <td>1,006</td>
-                  <td>nibh</td>
-                  <td>elementum</td>
-                  <td>imperdiet</td>
-                  <td>Duis</td>
-                </tr>
-                <tr>
-                  <td>1,007</td>
-                  <td>sagittis</td>
-                  <td>ipsum</td>
-                  <td>Praesent</td>
-                  <td>mauris</td>
-                </tr>
-                <tr>
-                  <td>1,008</td>
-                  <td>Fusce</td>
-                  <td>nec</td>
-                  <td>tellus</td>
-                  <td>sed</td>
-                </tr>
-                <tr>
-                  <td>1,009</td>
-                  <td>augue</td>
-                  <td>semper</td>
-                  <td>porta</td>
-                  <td>Mauris</td>
-                </tr>
-                <tr>
-                  <td>1,010</td>
-                  <td>massa</td>
-                  <td>Vestibulum</td>
-                  <td>lacinia</td>
-                  <td>arcu</td>
-                </tr>
-                <tr>
-                  <td>1,011</td>
-                  <td>eget</td>
-                  <td>nulla</td>
-                  <td>Class</td>
-                  <td>aptent</td>
-                </tr>
-                <tr>
-                  <td>1,012</td>
-                  <td>taciti</td>
-                  <td>sociosqu</td>
-                  <td>ad</td>
-                  <td>litora</td>
-                </tr>
-                <tr>
-                  <td>1,013</td>
-                  <td>torquent</td>
-                  <td>per</td>
-                  <td>conubia</td>
-                  <td>nostra</td>
-                </tr>
-                <tr>
-                  <td>1,014</td>
-                  <td>per</td>
-                  <td>inceptos</td>
-                  <td>himenaeos</td>
-                  <td>Curabitur</td>
-                </tr>
-                <tr>
-                  <td>1,015</td>
-                  <td>sodales</td>
-                  <td>ligula</td>
-                  <td>in</td>
-                  <td>libero</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
     </div>
+</nav>
+<!--
+当地时间
+T（温度）
+Po（气压）
+P（海平面气压）
+Pa
+U（湿度）
+DD（风向）
+Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天空可见度)	RRR（降水量）	E-->
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.min.js"></script>
-    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="js/index.js"></script>
-  </body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class=""><a href="#">系统概况</a></li>
+                <li><a href="#" class="t2010">2010年度气温走势</a></li>
+                <li><a href="#" class="t2011">2011年度气温走势</a></li>
+                <li><a href="#" class="t2012">2012年度气温走势</a></li>
+                <li><a href="#" class="t2013">2013年度气温走势</a></li>
+                <li><a href="#" class="t2014">2014年度气温走势</a></li>
+                <li><a href="#" class="t2015">2015年度气温走势</a></li>
+            </ul>
+
+        </div>
+        <div class="container-wrapper col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div id="container">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.min.js"></script>
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/index.js"></script>
+
+
+<script type="text/javascript" src="FCF/FusionCharts.js"></script>
+<script type="text/javascript" src="FCF/prettify.js"></script>
+<script type="text/javascript" src="FCF/json2.js"></script>
+
+</body>
+
+<script>
+
+    var data = '<chart caption="1996 - Average delay in Shipping Time (from the Required Time)" subCaption="By Country" yAxisName="Delay (in days)" xAxisName="Country" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" days" labelDisplay="ROTATE" numDivLines="5" slantLabels="1"><styles><definition><style type="font" name="CaptionFont" size="15" color="666666" /><style type="font" name="SubCaptionFont" bold="0" /></definition><application><apply toObject="caption" styles="CaptionFont" /><apply toObject="SubCaption" styles="SubCaptionFont" /></application></styles><set label="Portugal" value="8" /><set label="Belgium" value="7" /><set label="Poland" value="5" /><set label="Spain" value="4" /><set label="Finland" value="2" /><set label="Venezuela" value="2" /><set label="Italy" value="1" /><set label="Switzerland" value="0" /><set label="France" value="0" /><set label="UK" value="0" /><set label="USA" value="0" /><set label="Austria" value="-1" /><set label="Germany" value="-2" /><set label="Norway" value="-3" /><set label="Argentina" value="-3" /><set label="Denmark" value="-4" /><set label="Sweden" value="-4" /><set label="Brazil" value="-5" /><set label="Canada" value="-6" /><set label="Mexico" value="-7" /><set label="Ireland" value="-12" /></chart>';
+
+    var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
+    chart.setXMLData(data);
+    chart.render("container");
+
+    var arr;
+
+    setTimeout(function () {
+        arr = $(window).data('data');
+        $('.navbar-brand').html($('.navbar-brand').html() + '[ok]');
+    }, 3000);
+
+
+    $('ul.nav-sidebar a').click(function () {
+        if ($(this).is('[class^="t"]')) {
+
+            var year = $(this).attr('class').replace('t','');
+
+            var yearArray = $.grep(arr, function (item, index) {
+                return item[0].indexOf(year) > 0;
+            });
+            /*d2010.sort(function (a, b) {
+                var arrA = a[0].split(/[. :]/g).map(function (val) {
+                    return val * 1
+                });
+                var arrB = b[0].split(/[. :]/g).map(function (val) {
+                    return val * 1
+                });
+                try{
+                    return new Date(arrA[2], arrA[1] -1, arrA[0]-1, arrA[3], arrA[4], 0) < new Date(arrB[2], arrB[1]-1, arrB[0]-1, arrB[3], arrB[4], 0);
+                }catch (e){
+                    debugger;
+                }
+
+            });*/
+            console.log(yearArray);
+            var sets = yearArray.map(function (array) {
+                return '<set label="' + array[0] + '" value="' + array[1] + '"/>';
+            });
+            var d2011 = [];
+            var d2012 = [];
+            var d2013 = [];
+            var d2014 = [];
+            var d2015 = [];
+
+            var chartData = '<chart caption="气温变化曲线" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" 度" labelDisplay="ROTATE" numDivLines="5" slantLabels="1">';
+            chartData += sets.join('');
+            chartData += '</chart>';
+
+
+            var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width() * 2, $(window).height() - 50, "0", "0");
+            chart.setXMLData(chartData);
+            chart.render("container");
+        }
+    });
+
+</script>
+
+
 </html>

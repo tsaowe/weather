@@ -1,3 +1,7 @@
-/**
- * Created by tsaowe on 16/4/1.
- */
+$(function(){
+   if(!$(window).data('data')){
+       $.getJSON('data.json',function(array){
+            $(window).data('data',array.reverse());
+       });
+   }
+});
