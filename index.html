@@ -79,12 +79,11 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
                 <li><a href="#" class="t-y">年度气温走势</a></li>
                 <li><a href="#" class="t-m">月度气温走势</a></li>
 
-                <li><a href="#" class="f2010">2010年度风向统计</a></li>
-                <li><a href="#" class="f2011">2011年度风向统计</a></li>
-                <li><a href="#" class="f2012">2012年度风向统计</a></li>
-                <li><a href="#" class="f2013">2013年度风向统计</a></li>
-                <li><a href="#" class="f2014">2014年度风向统计</a></li>
-                <li><a href="#" class="f2015">2015年度风向统计</a></li>
+                <li><a href="#" class="f-y">年度风向统计</a></li>
+                <li><a href="#" class="f-m">月度风向统计</a></li>
+
+                <li><a href="#" class="v-y">年度风力统计</a></li>
+                <li><a href="#" class="v-m">月度风力统计</a></li>
 
                 <li><a href="#" class="v2010">2010年度风力统计</a></li>
                 <li><a href="#" class="v2011">2011年度风力统计</a></li>
@@ -185,53 +184,107 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
                 var chartData = '<chart caption="'+yearAndMont+'气温变化曲线" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" 度" labelDisplay="ROTATE" numDivLines="5" slantLabels="1">';
                 chartData += sets.join('');
                 chartData += '</chart>';
-                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width() * 2, $(window).height() - 50, "0", "0");
+                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
                 chart.setXMLData(chartData);
                 chart.render("container");
             }).trigger('change')
 
         }else if($(this).is('[class^="f"]')){
-            //<chart caption='Airline Delay Causes' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>
-            year = $(this).attr('class').replace('f','');
-            yearArray = $.grep(arr, function (item, index) {
-                return item[0].indexOf(year) > 0;
-            });
 
-            var type = {};
-            $.each(yearArray,function(index,array){
-                var f = $.trim(array[6]||'无记录风向');
-                if(!!type[f]){
-                    type[f] = type[f] + 1;
-                }else {
-                    type[f] = 1;
-                }
-            });
+            select = $('<select/>');
+            option = $('<option></option>');
 
-            sets = [];
-            $.each(type,function(key,value){
-               sets.push("<set value='"+value+"' label='"+key+"'/>");
-            });
+            var className = $(this).attr('class');
 
-            chartData = "<chart caption='"+year+"风向统计' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>";
-            chartData += sets.join('');
-            chartData += '</chart>';
-            chart = new FusionCharts("FCF/Pie2D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
-            chart.setXMLData(chartData);
-            chart.render("container");
+
+            if(className == 'f-m') {
+                $.each(years, function (idx, y) {
+                    $.each(months, function (idxm, m) {
+                        select.append(option.clone().html(m + '.' + y).val(m + '.' + y));
+                    })
+                });
+            }else {
+                $.each(years,function(idx,y){
+                    select.append(option.clone().html(y).val(y));
+                });
+            }
+
+            wrapper.html(select);
+            wrapper.append('<div id="container"/>');
+
+
+
+            select.change(function(){
+                var yearAndMont = $(this).val();
+                var yearArray = $.grep(arr, function (item, index) {
+                    return item[0].indexOf(yearAndMont) > 0;
+                });
+                var type = {};
+                $.each(yearArray,function(index,array){
+                    var f = $.trim(array[6]||'无记录风向');
+                    if(!!type[f]){
+                        type[f] = type[f] + 1;
+                    }else {
+                        type[f] = 1;
+                    }
+                });
+
+                var sets = [];
+                $.each(type,function(key,value){
+                    sets.push("<set value='"+value+"' label='"+key+"'/>");
+                });
+
+                var chartData = "<chart caption='"+yearAndMont+"风向统计' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>";
+                chartData += sets.join('');
+                chartData += '</chart>';
+                var chart = new FusionCharts("FCF/Pie2D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
+                chart.setXMLData(chartData);
+                chart.render("container");
+            }).trigger('change')
+
         } else if ($(this).is('[class^="v"]')) {
-            year = $(this).attr('class').replace('v', '');
-            yearArray = $.grep(arr, function (item, index) {
-                return item[0].indexOf(year) > 0;
-            });
-            sets = yearArray.map(function (array) {
-                return '<set label="' + array[0] + '" value="' + array[7] + '"/>';
-            });
-            chartData = '<chart caption="'+year+'气温变化曲线" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" 级" labelDisplay="ROTATE" numDivLines="5" slantLabels="1">';
-            chartData += sets.join('');
-            chartData += '</chart>';
-            chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width() * 2, $(window).height() - 50, "0", "0");
-            chart.setXMLData(chartData);
-            chart.render("container");
+
+            select = $('<select/>');
+            option = $('<option></option>');
+
+            className = $(this).attr('class');
+
+
+            if(className == 'v-m') {
+                $.each(years, function (idx, y) {
+                    $.each(months, function (idxm, m) {
+                        select.append(option.clone().html(m + '.' + y).val(m + '.' + y));
+                    })
+                });
+            }else {
+                $.each(years,function(idx,y){
+                    select.append(option.clone().html(y).val(y));
+                });
+            }
+
+            wrapper.html(select);
+            wrapper.append('<div id="container"/>');
+
+
+
+            select.change(function(){
+                var yearAndMont = $(this).val();
+                var yearArray = $.grep(arr, function (item, index) {
+                    return item[0].indexOf(yearAndMont) > 0;
+                });
+
+                var sets = yearArray.map(function (array) {
+                    return '<set label="' + array[0] + '" value="' + array[7] + '"/>';
+                });
+
+                var chartData = "<chart caption='"+yearAndMont+"风力统计' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>";
+                chartData += sets.join('');
+                chartData += '</chart>';
+                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
+                chart.setXMLData(chartData);
+                chart.render("container");
+            }).trigger('change')
+
         }
     });
 
