@@ -74,7 +74,7 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class=""><a href="#">系统概况</a></li>
+                <li class=""><a class="data" href="#">实时数据展示[示例]</a></li>
 
                 <li><a href="#" class="t-y">年度气温走势</a></li>
                 <li><a href="#" class="t-m">月度气温走势</a></li>
@@ -94,6 +94,11 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
     </div>
 </div>
 
+<div class="hide table-wrapper">
+    <table class="table table-striped">
+
+    </table>
+</div>
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -106,23 +111,79 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
 <script type="text/javascript" src="FCF/prettify.js"></script>
 <script type="text/javascript" src="FCF/json2.js"></script>
 
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-keyboard="false" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">气象预警</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 </body>
 
 <script>
 
     var wrapper = $('.container-wrapper');
-    /*var data = '<chart caption="1996 - Average delay in Shipping Time (from the Required Time)" subCaption="By Country" yAxisName="Delay (in days)" xAxisName="Country" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" days" labelDisplay="ROTATE" numDivLines="5" slantLabels="1"><styles><definition><style type="font" name="CaptionFont" size="15" color="666666" /><style type="font" name="SubCaptionFont" bold="0" /></definition><application><apply toObject="caption" styles="CaptionFont" /><apply toObject="SubCaption" styles="SubCaptionFont" /></application></styles><set label="Portugal" value="8" /><set label="Belgium" value="7" /><set label="Poland" value="5" /><set label="Spain" value="4" /><set label="Finland" value="2" /><set label="Venezuela" value="2" /><set label="Italy" value="1" /><set label="Switzerland" value="0" /><set label="France" value="0" /><set label="UK" value="0" /><set label="USA" value="0" /><set label="Austria" value="-1" /><set label="Germany" value="-2" /><set label="Norway" value="-3" /><set label="Argentina" value="-3" /><set label="Denmark" value="-4" /><set label="Sweden" value="-4" /><set label="Brazil" value="-5" /><set label="Canada" value="-6" /><set label="Mexico" value="-7" /><set label="Ireland" value="-12" /></chart>';
+    var table = $('.table');
+    var tableWrapper = $('.table-wrapper');
+    var tr = $('<tr></tr>');
+    var td = $('<td></td>');
 
-    var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", wrapper.width(), $(window).height() - 50, "0", "0");
-    chart.setXMLData(data);
-    chart.render("container");*/
 
     var arr;
+
 
     setTimeout(function () {
         arr = $(window).data('data');
         var brand = $('.navbar-brand');
         brand.html(brand.html() + '[ok]');
+
+        var counter = 0;
+        var appendItems = $.grep(arr.reverse(), function (item, index) {
+            if(item[0].indexOf('.2014') > 0){
+                counter ++;
+            }
+            return counter >0 && counter <21;
+        });
+
+        appendItems.unshift(arr.reverse()[arr.length - 1]);
+        $.each(appendItems,function(i,t){
+            var innerTr = tr.clone();
+            $.each(t,function(){
+                innerTr.append(td.clone().html(this+''));
+            });
+            table.append(innerTr);
+        });
+
+
+        var pushItems = $.grep(arr, function (item, index) {
+            return item[0].indexOf('.2015') > 0
+        });
+
+        $('.data').click();
+
+        setInterval(function(){
+            var innerTr = tr.clone();
+            $.each(pushItems.shift(),function(){
+                innerTr.append(td.clone().html(this+''));
+            });
+            table.find('tr:first').after(innerTr);
+        },2000);
+
     }, 3000);
 
 
@@ -278,8 +339,31 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
                 chart.render("container");
             }).trigger('change')
 
+        }else if($(this).is('.data')){
+            wrapper.html(table);
         }
     });
+
+
+    setInterval(function(){
+        if($('#myModal').is(':hidden')) {
+
+            // 最高温度为后面的乘数
+            var randomTemp = Math.random() * 40;
+            if(randomTemp > 100){
+                $('#myModal').modal().find('.modal-body').html('当前温度超出预警温度:'+randomTemp.toFixed(2));
+            }
+        }
+
+        if(table.text().replace(/ /g,'').length > 0){
+
+        }
+    },1000);
+
+
+
+
+
 
 </script>
 
