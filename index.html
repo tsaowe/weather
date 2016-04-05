@@ -150,7 +150,7 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
                 var chartData = '<chart caption="'+year+'气温变化曲线" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" 度" labelDisplay="ROTATE" numDivLines="5" slantLabels="1">';
                 chartData += sets.join('');
                 chartData += '</chart>';
-                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width() * 2, $(window).height() - 50, "0", "0");
+                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width() * 2, $(window).height()/2, "0", "0");
                 chart.setXMLData(chartData);
                 chart.render("container");
             }).trigger('change')
@@ -177,7 +177,7 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
                 var chartData = '<chart caption="'+yearAndMont+'气温变化曲线" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" 度" labelDisplay="ROTATE" numDivLines="5" slantLabels="1">';
                 chartData += sets.join('');
                 chartData += '</chart>';
-                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
+                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width(), $(window).height()/2, "0", "0");
                 chart.setXMLData(chartData);
                 chart.render("container");
             }).trigger('change')
@@ -230,7 +230,7 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
                 var chartData = "<chart caption='"+yearAndMont+"风向统计' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>";
                 chartData += sets.join('');
                 chartData += '</chart>';
-                var chart = new FusionCharts("FCF/Pie2D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
+                var chart = new FusionCharts("FCF/Pie2D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() /2, "0", "0");
                 chart.setXMLData(chartData);
                 chart.render("container");
             }).trigger('change')
@@ -273,7 +273,7 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
                 var chartData = "<chart caption='"+yearAndMont+"风力统计' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>";
                 chartData += sets.join('');
                 chartData += '</chart>';
-                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
+                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width(), $(window).height()/2, "0", "0");
                 chart.setXMLData(chartData);
                 chart.render("container");
             }).trigger('change')
