@@ -350,7 +350,7 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
 
             // 最高温度为后面的乘数
             var randomTemp = Math.random() * 40;
-            if(randomTemp > 100){
+            if(randomTemp > 39){
                 $('#myModal').modal().find('.modal-body').html('当前温度超出预警温度:'+randomTemp.toFixed(2));
             }
         }
