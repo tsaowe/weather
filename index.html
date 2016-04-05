@@ -75,12 +75,9 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li class=""><a href="#">系统概况</a></li>
-                <li><a href="#" class="t2010">2010年度气温走势</a></li>
-                <li><a href="#" class="t2011">2011年度气温走势</a></li>
-                <li><a href="#" class="t2012">2012年度气温走势</a></li>
-                <li><a href="#" class="t2013">2013年度气温走势</a></li>
-                <li><a href="#" class="t2014">2014年度气温走势</a></li>
-                <li><a href="#" class="t2015">2015年度气温走势</a></li>
+
+                <li><a href="#" class="t-y">年度气温走势</a></li>
+                <li><a href="#" class="t-m">月度气温走势</a></li>
 
                 <li><a href="#" class="f2010">2010年度风向统计</a></li>
                 <li><a href="#" class="f2011">2011年度风向统计</a></li>
@@ -88,13 +85,19 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
                 <li><a href="#" class="f2013">2013年度风向统计</a></li>
                 <li><a href="#" class="f2014">2014年度风向统计</a></li>
                 <li><a href="#" class="f2015">2015年度风向统计</a></li>
+
+                <li><a href="#" class="v2010">2010年度风力统计</a></li>
+                <li><a href="#" class="v2011">2011年度风力统计</a></li>
+                <li><a href="#" class="v2012">2012年度风力统计</a></li>
+                <li><a href="#" class="v2013">2013年度风力统计</a></li>
+                <li><a href="#" class="v2014">2014年度风力统计</a></li>
+                <li><a href="#" class="v2015">2015年度风力统计</a></li>
             </ul>
 
         </div>
         <div class="container-wrapper col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div id="container">
 
-            </div>
+
         </div>
     </div>
 </div>
@@ -115,35 +118,78 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
 
 <script>
 
-    var data = '<chart caption="1996 - Average delay in Shipping Time (from the Required Time)" subCaption="By Country" yAxisName="Delay (in days)" xAxisName="Country" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" days" labelDisplay="ROTATE" numDivLines="5" slantLabels="1"><styles><definition><style type="font" name="CaptionFont" size="15" color="666666" /><style type="font" name="SubCaptionFont" bold="0" /></definition><application><apply toObject="caption" styles="CaptionFont" /><apply toObject="SubCaption" styles="SubCaptionFont" /></application></styles><set label="Portugal" value="8" /><set label="Belgium" value="7" /><set label="Poland" value="5" /><set label="Spain" value="4" /><set label="Finland" value="2" /><set label="Venezuela" value="2" /><set label="Italy" value="1" /><set label="Switzerland" value="0" /><set label="France" value="0" /><set label="UK" value="0" /><set label="USA" value="0" /><set label="Austria" value="-1" /><set label="Germany" value="-2" /><set label="Norway" value="-3" /><set label="Argentina" value="-3" /><set label="Denmark" value="-4" /><set label="Sweden" value="-4" /><set label="Brazil" value="-5" /><set label="Canada" value="-6" /><set label="Mexico" value="-7" /><set label="Ireland" value="-12" /></chart>';
+    var wrapper = $('.container-wrapper');
+    /*var data = '<chart caption="1996 - Average delay in Shipping Time (from the Required Time)" subCaption="By Country" yAxisName="Delay (in days)" xAxisName="Country" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" days" labelDisplay="ROTATE" numDivLines="5" slantLabels="1"><styles><definition><style type="font" name="CaptionFont" size="15" color="666666" /><style type="font" name="SubCaptionFont" bold="0" /></definition><application><apply toObject="caption" styles="CaptionFont" /><apply toObject="SubCaption" styles="SubCaptionFont" /></application></styles><set label="Portugal" value="8" /><set label="Belgium" value="7" /><set label="Poland" value="5" /><set label="Spain" value="4" /><set label="Finland" value="2" /><set label="Venezuela" value="2" /><set label="Italy" value="1" /><set label="Switzerland" value="0" /><set label="France" value="0" /><set label="UK" value="0" /><set label="USA" value="0" /><set label="Austria" value="-1" /><set label="Germany" value="-2" /><set label="Norway" value="-3" /><set label="Argentina" value="-3" /><set label="Denmark" value="-4" /><set label="Sweden" value="-4" /><set label="Brazil" value="-5" /><set label="Canada" value="-6" /><set label="Mexico" value="-7" /><set label="Ireland" value="-12" /></chart>';
 
-    var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
+    var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", wrapper.width(), $(window).height() - 50, "0", "0");
     chart.setXMLData(data);
-    chart.render("container");
+    chart.render("container");*/
 
     var arr;
 
     setTimeout(function () {
         arr = $(window).data('data');
-        $('.navbar-brand').html($('.navbar-brand').html() + '[ok]');
+        var brand = $('.navbar-brand');
+        brand.html(brand.html() + '[ok]');
     }, 3000);
 
 
+    var years = [2010,2011,2012,2013,2014,2015];
+    var months = [1,2,3,4,5,6,7,8,9,10,11,12];
+
     $('ul.nav-sidebar a').click(function () {
-        if ($(this).is('[class^="t"]')) {
-            var year = $(this).attr('class').replace('t','');
-            var yearArray = $.grep(arr, function (item, index) {
-                return item[0].indexOf(year) > 0;
+        if ($(this).is('[class="t-y"]')) {
+            var select = $('<select/>');
+            var option = $('<option></option>');
+
+            $.each(years,function(idx,y){
+                select.append(option.clone().html(y).val(y));
             });
-            var sets = yearArray.map(function (array) {
-                return '<set label="' + array[0] + '" value="' + array[1] + '"/>';
+            wrapper.html(select);
+            wrapper.append('<div id="container"/>');
+            select.change(function(){
+                var year = $(this).val();
+                var yearArray = $.grep(arr, function (item, index) {
+                    return item[0].indexOf(year) > 0;
+                });
+                var sets = yearArray.map(function (array) {
+                    return '<set label="' + array[0] + '" value="' + array[1] + '"/>';
+                });
+                var chartData = '<chart caption="'+year+'气温变化曲线" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" 度" labelDisplay="ROTATE" numDivLines="5" slantLabels="1">';
+                chartData += sets.join('');
+                chartData += '</chart>';
+                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width() * 2, $(window).height() - 50, "0", "0");
+                chart.setXMLData(chartData);
+                chart.render("container");
+            }).trigger('change')
+
+        }else if ($(this).is('[class="t-m"]')) {
+            select = $('<select/>');
+            option = $('<option></option>');
+
+            $.each(years, function (idx, y) {
+                $.each(months, function (idxm, m) {
+                    select.append(option.clone().html(m + '.' + y).val(m + '.' + y));
+                })
             });
-            var chartData = '<chart caption="气温变化曲线" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" 度" labelDisplay="ROTATE" numDivLines="5" slantLabels="1">';
-            chartData += sets.join('');
-            chartData += '</chart>';
-            var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width() * 2, $(window).height() - 50, "0", "0");
-            chart.setXMLData(chartData);
-            chart.render("container");
+            wrapper.html(select);
+            wrapper.append('<div id="container"/>');
+            select.change(function(){
+                var yearAndMont = $(this).val();
+                var yearArray = $.grep(arr, function (item, index) {
+                    return item[0].indexOf(yearAndMont) > 0;
+                });
+                var sets = yearArray.map(function (array) {
+                    return '<set label="' + array[0] + '" value="' + array[1] + '"/>';
+                });
+                var chartData = '<chart caption="'+yearAndMont+'气温变化曲线" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" 度" labelDisplay="ROTATE" numDivLines="5" slantLabels="1">';
+                chartData += sets.join('');
+                chartData += '</chart>';
+                var chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width() * 2, $(window).height() - 50, "0", "0");
+                chart.setXMLData(chartData);
+                chart.render("container");
+            }).trigger('change')
+
         }else if($(this).is('[class^="f"]')){
             //<chart caption='Airline Delay Causes' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>
             year = $(this).attr('class').replace('f','');
@@ -166,10 +212,24 @@ Ff（平均风速）	N	WW	W1	W2	Tn（最低气温）	Tx（最高气温）	H(天�
                sets.push("<set value='"+value+"' label='"+key+"'/>");
             });
 
-            chartData = "<chart caption='风向统计' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>";
+            chartData = "<chart caption='"+year+"风向统计' showPercentageInLabel='1' showValues='0' showLabels='0' showLegend='1'>";
             chartData += sets.join('');
             chartData += '</chart>';
             chart = new FusionCharts("FCF/Pie2D.swf", "ChartId", $('.container-wrapper').width(), $(window).height() - 50, "0", "0");
+            chart.setXMLData(chartData);
+            chart.render("container");
+        } else if ($(this).is('[class^="v"]')) {
+            year = $(this).attr('class').replace('v', '');
+            yearArray = $.grep(arr, function (item, index) {
+                return item[0].indexOf(year) > 0;
+            });
+            sets = yearArray.map(function (array) {
+                return '<set label="' + array[0] + '" value="' + array[7] + '"/>';
+            });
+            chartData = '<chart caption="'+year+'气温变化曲线" palette="2" animation="1" showValues="0" formatNumberScale="1" numberSuffix=" 级" labelDisplay="ROTATE" numDivLines="5" slantLabels="1">';
+            chartData += sets.join('');
+            chartData += '</chart>';
+            chart = new FusionCharts("FCF/Column3D.swf", "ChartId", $('.container-wrapper').width() * 2, $(window).height() - 50, "0", "0");
             chart.setXMLData(chartData);
             chart.render("container");
         }
